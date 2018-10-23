@@ -1,31 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "ECS and RDS scheduler cross account role, version 2.2.2.0",
-    "Parameters": {
-        "InstanceSchedulerAccount": {
-            "Type": "String",
-            "AllowedPattern": "(^[0-9]{12}$)",
-            "ConstraintDescription": "Account number is a 12 digit number",
-            "Description": "Account number of Instance Scheduler account to give access to manage EC2 and RDS  Instances in this account."
-        }
-    },
-    "Metadata": {
-        "AWS::CloudFormation::Interface": {
-            "ParameterGroups": [{
-                "Label": {
-                    "default": "Account"
-                },
-                "Parameters": [
-                    "InstanceSchedulerAccount"
-                ]
-            }],
-            "ParameterLabels": {
-                "InstanceSchedulerAccount": {
-                    "default": "Primary account"
-                }
-            }
-        }
-    },
     "Resources": {
         "EC2SchedulerCrossAccountRole": {
             "Type": "AWS::IAM::Role",
@@ -35,16 +10,7 @@
                     "Statement": [{
                         "Effect": "Allow",
                         "Principal": {
-                            "AWS": {
-                                "Fn::Join": [
-                                    "", [
-                                        "arn:aws:iam::", {
-                                            "Ref": "InstanceSchedulerAccount"
-                                        },
-                                        ":root"
-                                    ]
-                                ]
-                            },
+                            "AWS": "arn:aws:iam::569342330542:root",
                             "Service": "lambda.amazonaws.com"
                         },
                         "Action": [
